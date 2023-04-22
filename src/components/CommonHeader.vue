@@ -1,7 +1,7 @@
 <template>
   <div class="head-container">
     <div class="l-content">
-      <el-button icon="el-icon-menu" size="mini"></el-button>
+      <el-button icon="el-icon-menu" size="mini" @click="changeCollapse"></el-button>
       <!-- 面包屑 -->
       <span class="text">首页</span>
     </div>
@@ -18,7 +18,13 @@
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    changeCollapse() {
+      this.$store.commit('collapseMenu')
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">
