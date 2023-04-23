@@ -96,6 +96,8 @@ export default {
       if (this.$route.path !== item.path && !(this.$route.path === '/home' && item.path === '/')) {
         this.$router.push(item.path)
       }
+      // 点击列表项，若进行路由跳转，在此处处理面包屑
+      this.$store.commit('selectMenu', item)
     }
   },
   computed: {

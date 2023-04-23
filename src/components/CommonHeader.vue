@@ -1,9 +1,11 @@
 <template>
   <div class="head-container">
     <div class="l-content">
-      <el-button icon="el-icon-menu" size="mini" @click="changeCollapse"></el-button>
+      <el-button icon="el-icon-menu" size="mini" @click="changeCollapse" style="margin-right: 20px"></el-button>
       <!-- 面包屑 -->
-      <span class="text">首页</span>
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item v-for="item in tags" :key="item.path" :to="$route.path !== item.path && !($route.path === '/home' && item.path === '/') ? { path: $route.path } : { path: item.path }">{{ item.label }}</el-breadcrumb-item>
+      </el-breadcrumb>
     </div>
     <div class="r-content">
       <el-dropdown>
@@ -18,11 +20,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   methods: {
     changeCollapse() {
       this.$store.commit('collapseMenu')
     }
+  },
+  computed: {
+    ...mapState({
+      tags: state => state.tab.tabList
+    })
   }
 }
 </script>
@@ -45,6 +53,23 @@ export default {
       height: 40px;
       width: 40px;
       border-radius: 50%;
+    }
+  }
+  .l-content {
+    display: flex;
+    align-items: center;
+    /deep/.el-breadcrumb__item {
+      .el-breadcrumb__inner {
+        font-weight: normal;
+        &.is-link {
+          color: #666;
+        }
+      }
+      &:last-child {
+        .el-breadcrumb__inner {
+          color: white;
+        }
+      }
     }
   }
 }
