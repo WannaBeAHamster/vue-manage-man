@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="8">
+      <el-col :span="8" style="padding-right: 10px">
         <el-card class="box-card">
           <div class="user">
             <img src="../assets/images/user.png" alt="" />
@@ -25,7 +25,7 @@
           </el-table>
         </el-card>
       </el-col>
-      <el-col :span="16">
+      <el-col :span="16" style="padding-left: 10px">
         <div class="num">
           <el-card v-for="item in countData" :key="item.name" :body-style="{ display: 'flex', padding: 0 }">
             <i class="icon" :class="`el-icon-${item.icon}`" :style="{ backgroundColor: item.color }"></i>
@@ -35,53 +35,24 @@
             </div>
           </el-card>
         </div>
+        <el-card style="height: 280px">
+          <!-- 折线图 -->
+        </el-card>
+        <div class="graph">
+          <el-card style="height: 260px"></el-card>
+          <el-card style="height: 260px"></el-card>
+        </div>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import { getData } from '../api/index.js'
 export default {
   data() {
     return {
-      tableData: [
-        {
-          name: 'oppo',
-          todayBuy: 100,
-          monthBuy: 300,
-          totalBuy: 800
-        },
-        {
-          name: 'vivo',
-          todayBuy: 100,
-          monthBuy: 300,
-          totalBuy: 800
-        },
-        {
-          name: '苹果',
-          todayBuy: 100,
-          monthBuy: 300,
-          totalBuy: 800
-        },
-        {
-          name: '小米',
-          todayBuy: 100,
-          monthBuy: 300,
-          totalBuy: 800
-        },
-        {
-          name: '三星',
-          todayBuy: 100,
-          monthBuy: 300,
-          totalBuy: 800
-        },
-        {
-          name: '魅族',
-          todayBuy: 100,
-          monthBuy: 300,
-          totalBuy: 800
-        }
-      ],
+      tableData: [],
       tableLabel: {
         name: '品牌',
         todayBuy: '今日购买',
@@ -127,6 +98,12 @@ export default {
         }
       ]
     }
+  },
+  mounted() {
+    getData().then(({ data }) => {
+      const { tableData } = data.data
+      this.tableData = tableData
+    })
   }
 }
 </script>
@@ -198,6 +175,14 @@ export default {
       color: #999999;
       text-align: center;
     }
+  }
+}
+.graph {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  .el-card {
+    width: 48%;
   }
 }
 </style>
